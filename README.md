@@ -1,1 +1,3 @@
-# fs-wsk
+# Fullstack-websovelluskehitys
+
+Kurssin tehtävien palautusrepositorio
