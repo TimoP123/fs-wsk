@@ -45,30 +45,30 @@ class App extends React.Component {
         }
     }
 
+    lisaaHyva = () => {
+        return () => {
+            this.setState({ hyva: this.state.hyva + 1 })
+        }
+    }
+
+    lisaaNeutraali = () => {
+        return () => {
+            this.setState({ neutraali: this.state.neutraali + 1 })
+        }
+    }
+
+    lisaaHuono = () => {
+        return () => {
+            this.setState({ huono: this.state.huono + 1 })
+        }
+    }
+
     render() {
         const {hyva, neutraali, huono} = this.state;
 
-        const lisaaHyva = () => {
-            return () => {
-                this.setState({ hyva: this.state.hyva + 1 })
-            }
-        }
-
-        const lisaaNeutraali = () => {
-            return () => {
-                this.setState({ neutraali: this.state.neutraali + 1 })
-            }
-        }
-
-        const lisaaHuono = () => {
-            return () => {
-                this.setState({ huono: this.state.huono + 1 })
-            }
-        }
-
         return (
             <div>
-                <Palauteboxi lisaaHyva={lisaaHyva.bind(this)} lisaaNeutraali={lisaaNeutraali.bind(this)} lisaaHuono={lisaaHuono.bind(this)} />
+                <Palauteboxi lisaaHyva={this.lisaaHyva} lisaaNeutraali={this.lisaaNeutraali} lisaaHuono={this.lisaaHuono} />
                 <Statistiikka hyva={hyva} neutraali={neutraali} huono={huono} />
             </div>
         )
