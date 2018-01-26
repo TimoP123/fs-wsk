@@ -12,8 +12,7 @@ const Palauteboxi = props => {
     )
 }
 
-const Statistiikka = props => {
-    const { hyva, neutraali, huono } = props;
+const Statistiikka = ({hyva, neutraali, huono}) => {
     let yhteensa = hyva + neutraali + huono;
     let keskiarvo = (hyva - huono) / yhteensa;
     let positiivisia = hyva / yhteensa;
@@ -45,23 +44,9 @@ class App extends React.Component {
         }
     }
 
-    lisaaHyva = () => {
-        return () => {
-            this.setState({ hyva: this.state.hyva + 1 })
-        }
-    }
-
-    lisaaNeutraali = () => {
-        return () => {
-            this.setState({ neutraali: this.state.neutraali + 1 })
-        }
-    }
-
-    lisaaHuono = () => {
-        return () => {
-            this.setState({ huono: this.state.huono + 1 })
-        }
-    }
+    lisaaHyva = () =>  () => this.setState({ hyva: this.state.hyva + 1 })
+    lisaaNeutraali = () => () => this.setState({ neutraali: this.state.neutraali + 1 })
+    lisaaHuono = () => () => this.setState({ huono: this.state.huono + 1 })
 
     render() {
         const {hyva, neutraali, huono} = this.state;
