@@ -13,12 +13,24 @@ const Palauteboxi = props => {
 }
 
 const Statistiikka = props => {
+    const { hyva, neutraali, huono } = props;
+    let yhteensa = hyva + neutraali + huono;
+    let keskiarvo = (hyva - huono) / yhteensa;
+    let positiivisia = hyva / yhteensa;
+
+    if (yhteensa === 0) {
+        keskiarvo = 0;
+        positiivisia = 0;
+    }
+
     return (
         <div>
             <h1>Statistiikka</h1>
-            <div>hyvä: {props.hyva}</div>
-            <div>neutraali: {props.neutraali}</div>
-            <div>huono: {props.huono}</div>
+            <div>hyvä: {hyva}</div>
+            <div>neutraali: {neutraali}</div>
+            <div>huono: {huono}</div>
+            <div>keskiarvo: {keskiarvo}</div>
+            <div>positiivisia: {100 * positiivisia} %</div>
         </div>
     )
 }
