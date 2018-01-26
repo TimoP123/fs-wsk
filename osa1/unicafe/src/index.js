@@ -1,18 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Palauteboxi = props => {
+const Palauteboxi = ({lisaaHyva, lisaaNeutraali, lisaaHuono}) => {
     return (
         <div>
             <h1>Anna palautetta</h1>
-            <button onClick={props.lisaaHyva()}>Hyvä</button>
-            <button onClick={props.lisaaNeutraali()}>Neutraali</button>
-            <button onClick={props.lisaaHuono()}>Huono</button>
+            <Button handleClick={lisaaHyva} text="Hyvä" />
+            <Button handleClick={lisaaNeutraali} text="Neutraali" />
+            <Button handleClick={lisaaHuono} text="Huono" />
         </div>
     )
 }
 
-const Statistiikka = ({hyva, neutraali, huono}) => {
+const Button = ({handleClick, text}) => <button onClick={handleClick()}>{text}</button>
+
+const Statistic = ({label, value}) => <div>{label}: {value}</div>
+
+const Statistics = ({hyva, neutraali, huono}) => {
     let yhteensa = hyva + neutraali + huono;
     let keskiarvo = (hyva - huono) / yhteensa;
     let positiivisia = hyva / yhteensa;
@@ -25,11 +29,11 @@ const Statistiikka = ({hyva, neutraali, huono}) => {
     return (
         <div>
             <h1>Statistiikka</h1>
-            <div>hyvä: {hyva}</div>
-            <div>neutraali: {neutraali}</div>
-            <div>huono: {huono}</div>
-            <div>keskiarvo: {keskiarvo}</div>
-            <div>positiivisia: {100 * positiivisia} %</div>
+            <Statistic label="Hyvä" value={hyva} />
+            <Statistic label="Neutraali" value={neutraali} />
+            <Statistic label="Huono" value={huono} />
+            <Statistic label="Keskiarvo" value={keskiarvo} />
+            <Statistic label="Positiivisia" value={100 * positiivisia + " %"} />
         </div>
     )
 }
@@ -54,7 +58,7 @@ class App extends React.Component {
         return (
             <div>
                 <Palauteboxi lisaaHyva={this.lisaaHyva} lisaaNeutraali={this.lisaaNeutraali} lisaaHuono={this.lisaaHuono} />
-                <Statistiikka hyva={hyva} neutraali={neutraali} huono={huono} />
+                <Statistics hyva={hyva} neutraali={neutraali} huono={huono} />
             </div>
         )
     }
