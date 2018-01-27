@@ -14,7 +14,7 @@ const Palauteboxi = ({annaPalaute}) => {
 
 const Button = ({handleClick, palaute, text}) => <button onClick={handleClick({palaute})}>{text}</button>
 
-const Statistic = ({label, value}) => <div>{label}: {value}</div>
+const Statistic = ({label, value}) => <tr><td>{label}</td><td>{value}</td></tr>
 
 const Statistics = ({hyva, neutraali, huono}) => {
     let yhteensa = hyva + neutraali + huono;
@@ -33,11 +33,13 @@ const Statistics = ({hyva, neutraali, huono}) => {
     return (
         <div>
             <h1>Statistiikka</h1>
-            <Statistic label="Hyvä" value={hyva} />
-            <Statistic label="Neutraali" value={neutraali} />
-            <Statistic label="Huono" value={huono} />
-            <Statistic label="Keskiarvo" value={keskiarvo} />
-            <Statistic label="Positiivisia" value={100 * positiivisia + " %"} />
+            <table><tbody>
+                <Statistic label="Hyvä" value={hyva} />
+                <Statistic label="Neutraali" value={neutraali} />
+                <Statistic label="Huono" value={huono} />
+                <Statistic label="Keskiarvo" value={keskiarvo} />
+                <Statistic label="Positiivisia" value={100 * positiivisia + " %"} />
+            </tbody></table>
         </div>
     )
 }
