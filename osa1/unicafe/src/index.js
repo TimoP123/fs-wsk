@@ -1,18 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Palauteboxi = ({lisaaHyva, lisaaNeutraali, lisaaHuono}) => {
+const Palauteboxi = ({annaPalaute}) => {
     return (
         <div>
             <h1>Anna palautetta</h1>
-            <Button handleClick={lisaaHyva} text="Hyvä" />
-            <Button handleClick={lisaaNeutraali} text="Neutraali" />
-            <Button handleClick={lisaaHuono} text="Huono" />
+            <Button handleClick={annaPalaute} palaute={1} text="Hyvä" />
+            <Button handleClick={annaPalaute} palaute={0} text="Neutraali" />
+            <Button handleClick={annaPalaute} palaute={-1} text="Huono" />
         </div>
     )
 }
 
-const Button = ({handleClick, text}) => <button onClick={handleClick()}>{text}</button>
+const Button = ({handleClick, palaute, text}) => <button onClick={handleClick({palaute})}>{text}</button>
 
 const Statistic = ({label, value}) => <div>{label}: {value}</div>
 
@@ -22,8 +22,12 @@ const Statistics = ({hyva, neutraali, huono}) => {
     let positiivisia = hyva / yhteensa;
 
     if (yhteensa === 0) {
-        keskiarvo = 0;
-        positiivisia = 0;
+        return (
+            <div>
+                <h1>Statistiikka</h1>
+                <p>Ei yhtään palautetta annettu.</p>
+            </div>          
+        )
     }
 
     return (
@@ -48,16 +52,32 @@ class App extends React.Component {
         }
     }
 
-    lisaaHyva = () =>  () => this.setState({ hyva: this.state.hyva + 1 })
-    lisaaNeutraali = () => () => this.setState({ neutraali: this.state.neutraali + 1 })
-    lisaaHuono = () => () => this.setState({ huono: this.state.huono + 1 })
+    annaPalaute = (palaute) => {
+        return() => {
+                const arvio = palaute.palaute;
+                console.log("Arvio:  ", arvio);
+                switch (arvio) {
+                    case 1:
+                        this.setState({ hyva: this.state.hyva + 1 })
+                        break;
+                    case 0:
+                        this.setState({ neutraali: this.state.neutraali + 1 })
+                        break;
+                    case -1:
+                        this.setState({ huono: this.state.huono + 1 })
+                        break;
+                    default:
+                        break;
+                }
+        }
+    }
 
     render() {
         const {hyva, neutraali, huono} = this.state;
 
         return (
             <div>
-                <Palauteboxi lisaaHyva={this.lisaaHyva} lisaaNeutraali={this.lisaaNeutraali} lisaaHuono={this.lisaaHuono} />
+                <Palauteboxi annaPalaute={this.annaPalaute} />
                 <Statistics hyva={hyva} neutraali={neutraali} huono={huono} />
             </div>
         )
