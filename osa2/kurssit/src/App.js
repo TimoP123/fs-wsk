@@ -19,6 +19,11 @@ const App = () => {
         nimi: 'Komponenttien tila',
         tehtavia: 14,
         id: 3
+      },
+      {
+        nimi: 'Funktionaalinen ohjelmointi',
+        tehtavia: 9,
+        id: 4
       }
     ]
   }
