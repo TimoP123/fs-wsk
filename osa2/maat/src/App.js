@@ -1,21 +1,61 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import axios from 'axios';
+import CountryList from './CountryList'
+import Country from './Country'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      countries: [],
+      filter: ''
+    }
   }
+
+  componentDidMount() {
+    console.log('will mount')
+    axios
+      .get('https://restcountries.eu/rest/v2/all')
+      .then(response => {
+        console.log('promise fulfilled')
+        this.setState({ countries: response.data })
+      })
+  }
+
+  handleFilterChange = (event) => {
+    this.setState({filter: event.target.value})
+  }
+
+  selectCountry = (name) => {
+    return() => {
+      this.setState({filter: name})
+    }
+  }
+
+  render() {
+    const filteredCountries = this.state.countries.filter(country => country.name.toLowerCase().indexOf(this.state.filter.toLowerCase()) !== -1);
+
+    let countries = null;
+    if (filteredCountries.length === 1) {
+      const country = filteredCountries[0];
+      countries = <Country name={country.name} capital={country.capital}
+            population={country.population} flag={country.flag} />
+    } else if (filteredCountries.length > 1 && filteredCountries.length <= 10) {
+      countries = <CountryList countries={filteredCountries} selectCountry={this.selectCountry} />
+    } else {
+      countries = <p>Too many matches! Specify your search.</p>
+    }
+    return (
+      <div>
+        <div>
+          Search countries: <input value={this.state.filter} onChange={this.handleFilterChange} />
+        </div>
+        {countries}
+      </div>
+    )
+  }
+
+
 }
 
 export default App;
