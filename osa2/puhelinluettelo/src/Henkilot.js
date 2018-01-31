@@ -5,7 +5,7 @@ const Henkilot = ({henkilot}) => {
         <div>
             <table><tbody>
                 {henkilot.map(henkilo =>
-                <tr key={henkilo.name}>
+                <tr key={henkilo.id}>
                     <td>{henkilo.name}</td><td>{henkilo.number}</td>
                 </tr>)}
             </tbody></table>
