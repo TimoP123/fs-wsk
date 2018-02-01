@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import personService from './services/persons'
 import Henkilot from './Henkilot'
 
 class App extends React.Component {
@@ -15,11 +15,11 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log('will mount')
-    axios
-      .get('http://localhost:3001/persons')
+    personService
+      .getAll()
       .then(response => {
         console.log('promise fulfilled')
-        this.setState({ persons: response.data })
+        this.setState({persons: response})
       })
   }
 
@@ -43,12 +43,19 @@ class App extends React.Component {
         name: this.state.newName,
         number: this.state.newNumber
       }
-      const persons = this.state.persons.concat(personObject)
-      this.setState({
-        persons,
-        newName: '',
-        newNumber: ''
+
+      personService
+      .create(personObject)
+      .then(response => {
+        console.log(response)
+        personObject.id = response.id;
+        this.setState({
+          persons: this.state.persons.concat(response),
+          newName: '',
+          newNumber: ''
+        })
       })
+      
     } else {
       alert("Henkilö, jota yrität lisätä on jo luettelossa!")
     }   
