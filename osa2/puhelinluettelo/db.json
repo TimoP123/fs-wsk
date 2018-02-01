@@ -11,69 +11,19 @@
       "id": 2
     },
     {
-      "name": "Arto Järvinen",
-      "number": "040-123456",
-      "id": 3
-    },
-    {
       "name": "Lea Kutvonen",
       "number": "040-123456",
       "id": 4
     },
     {
-      "name": "Jaakko Mäkinen",
-      "number": "040-234567",
+      "name": "Kaija Koo",
+      "number": "044-345345",
       "id": 5
     },
     {
-      "name": "Jaakko Pitkänen",
-      "number": "050-345678",
+      "name": "Jukka Jääskeläinen",
+      "number": "050-345789",
       "id": 6
-    },
-    {
-      "name": "Kiira Korpi",
-      "number": "044-13575",
-      "id": 7
-    },
-    {
-      "name": "Marika Krook",
-      "number": "041-987654",
-      "id": 8
-    },
-    {
-      "name": "Tuomas Heikkinen",
-      "number": "042-042042",
-      "id": 9
-    },
-    {
-      "name": "Mikko Jokinen",
-      "number": "043-43434343",
-      "id": 10
-    },
-    {
-      "name": "Maliniemen Anni",
-      "number": "044-044044044",
-      "id": 11
-    },
-    {
-      "name": "Heikki Hela",
-      "number": "045-4567845",
-      "id": 12
-    },
-    {
-      "name": "Sauli Niinistö",
-      "number": "09-0778899",
-      "id": 13
-    },
-    {
-      "name": "Urho Kekkonen",
-      "number": "040-555555",
-      "id": 14
-    },
-    {
-      "name": "Kata Kärkkäinen",
-      "number": "040-3453453",
-      "id": 15
     }
   ]
 }

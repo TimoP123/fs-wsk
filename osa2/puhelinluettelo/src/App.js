@@ -61,6 +61,19 @@ class App extends React.Component {
     }   
   }
 
+  removePerson = (henkilo) => {
+    window.confirm(`Poistetaanko ${henkilo.name} luettelosta?`) ?
+      personService
+      .remove(henkilo.id)
+      .then(response => {
+        console.log(response)
+        this.setState({
+          persons: this.state.persons.filter(person => person.id !== henkilo.id)
+        })
+      }) :
+      console.log("Poisto peruutettiin")
+  }
+
   render() {
     const filteredPersons = this.state.persons.filter(person => person.name.toLowerCase().indexOf(this.state.filter.toLowerCase()) !== -1);
     return (
@@ -82,7 +95,7 @@ class App extends React.Component {
           </div>
         </form>
         <h3>Numerot</h3>
-        <Henkilot henkilot={filteredPersons} />
+        <Henkilot henkilot={filteredPersons} remove={this.removePerson} />
       </div>
     )
   }
