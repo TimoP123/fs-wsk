@@ -2,6 +2,7 @@ import React from 'react';
 import personService from './services/persons'
 import Henkilot from './Henkilot'
 import Message from './Message'
+import ErrorMessage from './ErrorMessage'
 
 class App extends React.Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class App extends React.Component {
       newName: '',
       newNumber: '',
       filter: '',
-      message: null
+      message: null,
+      error: null
     }
   }
 
@@ -75,10 +77,23 @@ class App extends React.Component {
           const id = changedPerson.id
           this.setState({
             persons: this.state.persons.map(person => person.id !== id ? person : changedPerson),
-            message: `${changedPerson.name}n numero vaihdettiin.`
+            message: `${changedPerson.name}n numero vaihdettiin.`,
+            newName: '',
+            newNumber: '',
           })
           setTimeout(() => {
             this.setState({message: null})
+          }, 3000)
+        })
+        .catch(error => {
+          this.setState({
+            newName: '',
+            newNumber: '',
+            error: `Henkilö '${changedPerson.name}' on jo valitettavasti poistettu palvelimelta`,
+            persons: this.state.persons.filter(person => person.id !== changedPerson.id)
+          })
+          setTimeout(() => {
+            this.setState({error: null})
           }, 3000)
         }) 
       } else {
@@ -117,6 +132,7 @@ class App extends React.Component {
       <div>
         <h2>Puhelinluettelo</h2>
         <Message message={this.state.message}/>
+        <ErrorMessage message={this.state.error}/>
         <div>
           Rajaa nimiä: <input value={this.state.filter} onChange={this.handleFilterChange} />
         </div>
