@@ -1,6 +1,7 @@
 import React from 'react';
 import personService from './services/persons'
 import Henkilot from './Henkilot'
+import Message from './Message'
 
 class App extends React.Component {
   constructor(props) {
@@ -9,7 +10,8 @@ class App extends React.Component {
       persons: [],
       newName: '',
       newNumber: '',
-      filter: ''
+      filter: '',
+      message: null
     }
   }
 
@@ -52,9 +54,14 @@ class App extends React.Component {
         this.setState({
           persons: this.state.persons.concat(response),
           newName: '',
-          newNumber: ''
+          newNumber: '',
+          message: `${personObject.name} lisättiin puhelinluetteloon`
         })
+        setTimeout(() => {
+          this.setState({message: null})
+        }, 3000)
       })
+      
       
     } else {
       if(window.confirm(`${this.state.newName} on jo luettelossa. Korvataanko vanha numero uudella?`)) {
@@ -67,15 +74,22 @@ class App extends React.Component {
           console.log(response)
           const id = changedPerson.id
           this.setState({
-            persons: this.state.persons.map(person => person.id !== id ? person : changedPerson)
+            persons: this.state.persons.map(person => person.id !== id ? person : changedPerson),
+            message: `${changedPerson.name}n numero vaihdettiin.`
           })
+          setTimeout(() => {
+            this.setState({message: null})
+          }, 3000)
         }) 
       } else {
-        console.log("Puhelinnumeroa ei vaihdettu")
         this.setState({
           newName: '',
-          newNumber: ''
+          newNumber: '',
+          message: 'Puhelinnumeroa ei vaihdettu'
         })
+        setTimeout(() => {
+          this.setState({message: null})
+        }, 3000)
       }
     }
   }
@@ -87,8 +101,12 @@ class App extends React.Component {
       .then(response => {
         console.log(response)
         this.setState({
-          persons: this.state.persons.filter(person => person.id !== henkilo.id)
+          persons: this.state.persons.filter(person => person.id !== henkilo.id),
+          message: `${henkilo.name} poistettiin luettelosta.`
         })
+        setTimeout(() => {
+          this.setState({message: null})
+        }, 3000)
       }) :
       console.log("Poisto peruutettiin")
   }
@@ -98,6 +116,7 @@ class App extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        <Message message={this.state.message}/>
         <div>
           Rajaa nimiä: <input value={this.state.filter} onChange={this.handleFilterChange} />
         </div>

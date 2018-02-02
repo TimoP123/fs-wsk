@@ -31,9 +31,19 @@
       "id": 8
     },
     {
-      "name": "Matti Nykänen",
-      "number": "050-5554445",
-      "id": 9
+      "name": "Ninja Kissa",
+      "number": "020-0200020",
+      "id": 10
+    },
+    {
+      "name": "Seppo Seponseppo",
+      "number": "077-7575757",
+      "id": 12
+    },
+    {
+      "name": "Sauli Niinistö",
+      "number": "555-5555555",
+      "id": 13
     }
   ]
 }
