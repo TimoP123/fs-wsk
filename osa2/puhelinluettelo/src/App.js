@@ -38,12 +38,12 @@ class App extends React.Component {
   addPerson = (event) => {
     event.preventDefault()
 
-    if (this.state.persons.find(person => person.name === this.state.newName) == null) {
-      const personObject = {
-        name: this.state.newName,
-        number: this.state.newNumber
-      }
+    const personObject = {
+      name: this.state.newName,
+      number: this.state.newNumber
+    }
 
+    if (this.state.persons.find(person => person.name === this.state.newName) == null) {
       personService
       .create(personObject)
       .then(response => {
@@ -57,8 +57,27 @@ class App extends React.Component {
       })
       
     } else {
-      alert("Henkilö, jota yrität lisätä on jo luettelossa!")
-    }   
+      if(window.confirm(`${this.state.newName} on jo luettelossa. Korvataanko vanha numero uudella?`)) {
+        const oldPerson = this.state.persons.find(person => person.name === this.state.newName)
+        const changedPerson = {...oldPerson, number: this.state.newNumber}
+
+        personService
+        .update(oldPerson.id, changedPerson)
+        .then(response => {
+          console.log(response)
+          const id = changedPerson.id
+          this.setState({
+            persons: this.state.persons.map(person => person.id !== id ? person : changedPerson)
+          })
+        }) 
+      } else {
+        console.log("Puhelinnumeroa ei vaihdettu")
+        this.setState({
+          newName: '',
+          newNumber: ''
+        })
+      }
+    }
   }
 
   removePerson = (henkilo) => {
